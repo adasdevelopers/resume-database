@@ -12,6 +12,7 @@ CREATE TABLE Personal (
     WebsiteOne VARCHAR(255),
     WebsiteTwo VARCHAR(255),
     WebsiteThree VARCHAR(255),
+    resume-link VARCHAR(255) NOT NULL,
     PRIMARY KEY(PersonID)
 );
 
