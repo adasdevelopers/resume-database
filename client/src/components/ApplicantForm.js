@@ -1,24 +1,8 @@
 import React, { Fragment, useState } from "react";
-import {useForm} from 'react-hook-form'; 
+import { useForm } from "react-hook-form";
 
 export default function ApplicantForm() {
-	const {register, handleSubmit} = useForm();
-//   const [form, setForm] = useState({
-//     firstName: "",
-//     lastName: "",
-//     prefName: "",
-//     email: "",
-//     phonenumber: "",
-//     address: "",
-//     city: "",
-//     province: "",
-//     zip: "",
-//     web1: "",
-//     web2: "",
-//     web3: "",
-//     resume: "",
-//   });
-  const [description, setDescription] = useState("");
+  const { register, handleSubmit } = useForm();
 
   const [selectedFile, setSelectedFile] = useState();
   const [isFilePicked, setIsFilePicked] = useState(false);
@@ -28,27 +12,21 @@ export default function ApplicantForm() {
     setIsFilePicked(true);
   };
 
-  const handlefile = () => {
+  const onSubmit = async (data, e) => {
+    e.preventDefault();
     const formData = new FormData();
 
-	
     formData.append("pdf", selectedFile);
 
-    fetch("http://localhost:5000/upload", {
+    const res = await fetch("http://localhost:5000/upload", {
       method: "POST",
       body: formData,
     })
-      .then((response) => response.json())
-      .then((result) => {
-        console.log("Success:", result);
-      })
+      .then((res) => res.json())
       .catch((error) => {
         console.error("Error:", error);
       });
-  };
-
-  const onSubmit = async(data,e) => {
-	e.preventDefault();
+    data.resumelink = res.location;
     try {
       const response = await fetch("http://localhost:5000/personal", {
         method: "POST",
@@ -74,7 +52,7 @@ export default function ApplicantForm() {
               className="form-control"
               id="fname"
               placeholder="First Name"
-			  ref={register}
+              ref={register}
               required
             />
           </div>
@@ -86,7 +64,7 @@ export default function ApplicantForm() {
               className="form-control"
               id="lname"
               placeholder="Last Name"
-			  ref={register}
+              ref={register}
               required
             />
           </div>
@@ -98,7 +76,7 @@ export default function ApplicantForm() {
               className="form-control"
               id="prefname"
               placeholder="Preferred Name"
-			  ref={register}
+              ref={register}
             />
           </div>
         </div>
@@ -111,7 +89,7 @@ export default function ApplicantForm() {
               className="form-control"
               id="inputEmail"
               placeholder="Email"
-			  ref={register}
+              ref={register}
               required
             />
           </div>
@@ -123,7 +101,7 @@ export default function ApplicantForm() {
               className="form-control"
               id="inputphonenumber"
               placeholder="(123)-456-7890"
-			  ref={register}
+              ref={register}
             />
           </div>
         </div>
@@ -136,7 +114,7 @@ export default function ApplicantForm() {
             className="form-control"
             id="inputAddress"
             placeholder="1234 Main St"
-			ref={register}
+            ref={register}
             required
           />
         </div>
@@ -148,7 +126,7 @@ export default function ApplicantForm() {
               name="city"
               className="form-control"
               id="inputCity"
-			  ref={register}
+              ref={register}
               required
             />
           </div>
@@ -159,7 +137,7 @@ export default function ApplicantForm() {
               name="province"
               className="form-control"
               placeholder=""
-			  ref={register}
+              ref={register}
               required
             >
               <option value="">Choose...</option>
@@ -185,7 +163,7 @@ export default function ApplicantForm() {
               name="zip"
               className="form-control"
               id="inputZip"
-			  ref={register}
+              ref={register}
               required
             />
           </div>
@@ -200,7 +178,7 @@ export default function ApplicantForm() {
               className="form-control"
               id="web1"
               placeholder=""
-			  ref={register}
+              ref={register}
             />
           </div>
           <div className="form-group col-md-4">
@@ -211,7 +189,7 @@ export default function ApplicantForm() {
               className="form-control"
               id="web2"
               placeholder=""
-			  ref={register}
+              ref={register}
             />
           </div>
           <div className="form-group col-md-4">
@@ -222,7 +200,7 @@ export default function ApplicantForm() {
               className="form-control"
               id="web3"
               placeholder=""
-			  ref={register}
+              ref={register}
             />
           </div>
         </div>
@@ -237,7 +215,6 @@ export default function ApplicantForm() {
           />
           {isFilePicked ? (
             <div>
-              <p>Filetype: {selectedFile.type}</p>
               <p>Size in bytes: {selectedFile.size}</p>
             </div>
           ) : (

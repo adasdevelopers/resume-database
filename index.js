@@ -26,11 +26,12 @@ const upload = multer({
   storage: multerS3({
     s3: s3,
     bucket: process.env.AWS_BUCKET_NAME,
+    acl: "public-read",
     metadata: function (req, file, cb) {
       cb(null, { fieldName: file.fieldname });
     },
     key: function (req, file, cb) {
-      cb(null, Date.now().toString());
+      cb(null, Date.now().toString()+".pdf");
     },
   }),
 });
@@ -42,9 +43,10 @@ app.post("/upload", upload.single("pdf"), function (req, res, next) {
 app.post("/personal", async (req, res) => {
   try {
     const form = req.body;
+    console.log(form);
     const newTodo = await pool.query(
-      "INSERT INTO personal (firstname,lastname,preferredname,email,phonenumber,address,city,province,country,websiteone,websitetwo,websitethree,personid) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING *",
-      [form.firstName,form.lastName,form.prefName,form.email,form.phonenumber,form.address,form.city,form.province,"CANADA",form.web1,form.web2,form.web3,1]
+      "INSERT INTO personal (firstname,lastname,preferredname,email,phonenumber,address,city,province,country,websiteone,websitetwo,websitethree,resumelink) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING *",
+      [form.firstName,form.lastName,form.prefName,form.email,form.phonenumber,form.address,form.city,form.province,"CANADA",form.web1,form.web2,form.web3,form.resumelink]
     );
 
     res.json(newTodo.rows[0]);
@@ -52,21 +54,6 @@ app.post("/personal", async (req, res) => {
     console.error(err.message);
   }
 });
-
-// PersonID INT,
-//     LastName VARCHAR(255) NOT NULL,
-//     FirstName VARCHAR(255) NOT NULL,
-//     PreferredName VARCHAR(255),
-//     Email VARCHAR(50),
-//     PhoneNumber VARCHAR(15),
-//     Address VARCHAR(255) NOT NULL,
-//     City VARCHAR(255) NOT NULL,
-//     Province VARCHAR(255) NOT NULL,
-//     Country VARCHAR(25) NOT NULL,
-//     WebsiteOne VARCHAR(255),
-//     WebsiteTwo VARCHAR(255),
-//     WebsiteThree VARCHAR(255),
-//     PRIMARY KEY(PersonID)
 
 app.listen(PORT, () => {
   console.log(`server at port ${PORT}`);
