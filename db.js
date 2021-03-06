@@ -13,4 +13,6 @@ const proConfig = {
     connectionString: process.env.DATABASE_URL // coming form heroku
 };
 
-const pool = new Pool(proConfig);
+const pool = new Pool(devConfig);
+
+module.exports = pool;
