@@ -1,9 +1,9 @@
 CREATE TABLE Personal (
-    PersonID INT,
+    PersonID UUID DEFAULT uuid_generate_v4(),
     LastName VARCHAR(255) NOT NULL,
     FirstName VARCHAR(255) NOT NULL,
     PreferredName VARCHAR(255),
-    Email VARCHAR(50),
+    Email VARCHAR(50) NOT NULL,
     PhoneNumber VARCHAR(15),
     Address VARCHAR(255) NOT NULL,
     City VARCHAR(255) NOT NULL,
@@ -12,11 +12,12 @@ CREATE TABLE Personal (
     WebsiteOne VARCHAR(255),
     WebsiteTwo VARCHAR(255),
     WebsiteThree VARCHAR(255),
+    resumelink VARCHAR(255) NOT NULL,
     PRIMARY KEY(PersonID)
 );
 
 CREATE TABLE Education (
-    PersonID INT,
+    PersonID UUID,
     InstName VARCHAR(255),
     StartDate DATE,
     EndDate DATE,
@@ -27,7 +28,7 @@ CREATE TABLE Education (
 );
 
 CREATE TABLE Experience (
-    PersonID INT,
+    PersonID UUID,
     CompanyName VARCHAR(255),
     Position VARCHAR(255),
     StartDate DATE,
@@ -40,7 +41,7 @@ CREATE TABLE Experience (
 );
 
 CREATE TABLE Skill (
-    PersonID INT,
+    PersonID UUID,
     SkillName VARCHAR(255),
     FOREIGN KEY(PersonID) REFERENCES Personal(PersonID)
 );
