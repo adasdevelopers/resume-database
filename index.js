@@ -1,18 +1,23 @@
-require("dotenv/config");
-
 const express = require("express");
 const pool = require("./db");
 const path = require("path");
 const app = express();
+require("dotenv/config");
 const cors = require("cors");
 const multer = require("multer");
 const AWS = require("aws-sdk");
 const multerS3 = require("multer-s3");
 const PORT = process.env.PORT || 5000;
 
+
 //middleware
 app.use(cors());
 app.use(express.json());
+
+//routes
+app.use("/auth",require("./routes/jwtAuth"));
+app.use("/dashboard",require("./routes/dashboard"));
+
 
 //fileupload
 const s3 = new AWS.S3({
