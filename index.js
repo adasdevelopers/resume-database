@@ -17,6 +17,7 @@ app.use(express.json());
 app.use("/auth", require("./routes/jwtAuth"));
 app.use("/dashboard", require("./routes/dashboard"));
 
+
 //fileupload
 const s3 = new AWS.S3({
   accessKeyId: process.env.AWS_ID,
@@ -32,6 +33,7 @@ const upload = multer({
       cb(null, { fieldName: file.fieldname });
     },
     key: function (req, file, cb) {
+
       cb(null, Date.now().toString() + ".pdf");
     },
   }),
@@ -77,6 +79,7 @@ if (process.env.NODE_ENV === "production") {
 app.listen(PORT, () => {
   console.log(`server at port ${PORT}`);
 });
+
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/public/index.html"));

@@ -1,3 +1,4 @@
+
 import React, { Fragment, useState, useEffect } from "react";
 import "./App.css";
 import {
@@ -13,6 +14,9 @@ import Expform from "./components/ExperienceForm"
 import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
 import Register from "./components/Register";
+
+
+import ApplicantForm from "./components/ApplicantForm";
 
 function App() {
   return (
@@ -44,6 +48,7 @@ function App() {
           </div>
         </Router>
       </section>
+
     </Fragment>
   );
 }

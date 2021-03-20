@@ -1,3 +1,4 @@
+
 import React, {
   Fragment,
   useState,
@@ -35,11 +36,13 @@ const rejectStyle = {
   borderColor: "#ff1744",
 };
 
+
 export default function ApplicantForm() {
   const { register, handleSubmit } = useForm();
 
   const [selectedFile, setSelectedFile] = useState();
   const [isFilePicked, setIsFilePicked] = useState(false);
+
 
   const onSubmit = async (data, e) => {
     e.preventDefault();
@@ -102,6 +105,7 @@ export default function ApplicantForm() {
     }),
     [isDragActive, isDragReject, isDragAccept]
   );
+
 
   return (
     <Fragment>
@@ -270,6 +274,7 @@ export default function ApplicantForm() {
         </div>
         <div className="form-group">
           <label htmlFor="file">Resume</label>
+
           <div
             className="form-control"
             {...getRootProps({ className: "dropzone" })}
@@ -285,6 +290,7 @@ export default function ApplicantForm() {
           </aside>
         </div>
         <button type="submit" className="btn bttnsub">
+
           Submit
         </button>
       </form>
