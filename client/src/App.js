@@ -9,6 +9,7 @@ import {
 
 //components
 import ApplicantForm from "./components/ApplicantForm";
+import Expform from "./components/ExperienceForm"
 import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -19,6 +20,7 @@ function App() {
       <section id="applicantform">
         <div className="container">
           <ApplicantForm />
+          {/* <Expform /> */}
         </div>
         <Router>
           <div className="container">

@@ -96,6 +96,7 @@ export default function ApplicantForm() {
           <div className="form-group col-md-6">
             <label htmlFor="inputDescription">Description</label>
             <input
+              style={{height: '200px'}}
               type="text"
               name="description"
               className="form-control"
@@ -144,12 +145,12 @@ export default function ApplicantForm() {
             </select>
           </div>
           <div className="form-group col-md-6">
-            <label htmlFor="inputCity">City</label>
+            <label htmlFor="inputCity">Country</label>
             <input
               type="text"
-              name="city"
+              name="country"
               className="form-control"
-              id="inputCity"
+              id="inputCountry"
               ref={register}
               required
             />
