@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap');
+
+body {
+    padding:0;
+    margin:0;
+    background-color: #e9eaed;
+}
+
+li, li a {
+    font-family: "Lato", sans-serif;
+    color: #edf0f1;
+}
+
+header {
+    background-color: #919191;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 2px 0px 15px;
+}
+
+header strong {
+    font-family: "Lato", sans-serif;
+    color:#c9e265;
+}
+
+.nav_links {
+    list-style: none;
+    color:#edf0f1;
+}
+
+.nav_links li {
+    display: inline-block;
+    padding: 0px 20px;
+}
+
+.nav_links li a {
+    transition: all 0.3 ease 0s;
+}
+
+.nav_links li a:hover {
+    color: #c9e265;
+}
+
+div {
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    padding-left: 8%;
+    justify-content: center;
+    
+}
+
+.item1 {
+    font-size: 110px;
+    font-family: "Lato", sans-serif;
+}
+
+.item2 {
+    font-family: "Lato", sans-serif;
+    padding-left: 10px;
+}
+
+.item3 {
+    padding-left: 8px;
+}
+
+button {
+    background-color: rgb(201,226,101);
+    color: rgb(82, 80, 80);
+    height: 60px;
+    width: 60px;
+    border: none;
+    border-radius: 50%;
+    outline: none;
+}
+
+button:hover {
+    background-color: rgba(201,226,101,0.8);
+    cursor: pointer;
+}
+
