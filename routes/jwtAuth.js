@@ -21,16 +21,15 @@ router.post("/register", validInfo, async (req, res) => {
 
     //bcrypt pwd
     const saltRound = 10;
-    const salt = await bcrypt(saltRound);
+    const salt = await bcrypt.genSalt(saltRound);
 
     const bcryptpwd = await bcrypt.hash(password, salt);
 
     //enter user into db
     const newuser = await pool.query(
-      "INSERT INTO sponsor (user_email, user_password, user_first_name, user_last_name, companyname, city) VALUES ($1,$2,$3,$4,$5,$6)",
+      "INSERT INTO sponsor (user_email, user_password, user_first_name, user_last_name, companyname, city) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *",
       [email, bcryptpwd, firstName, lastName, company, city]
     );
-
     const token = jwtGen(newuser.rows[0].user_id);
     res.json({ token });
   } catch (error) {
@@ -44,9 +43,10 @@ router.post("/login", validInfo, async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await pool.query("SELECT * FROM users WHERE user_email = $1", [
-      email,
-    ]);
+    const user = await pool.query(
+      "SELECT * FROM sponsor WHERE user_email = $1",
+      [email]
+    );
 
     if (user.rows.length === 0) {
       return res.status(401).json("Invalid Credential");
@@ -60,8 +60,8 @@ router.post("/login", validInfo, async (req, res) => {
     if (!validPassword) {
       return res.status(401).json("Invalid Credential");
     }
-    const jwtToken = jwtGen(user.rows[0].user_id);
-    return res.json({ jwtToken });
+    const token = jwtGen(user.rows[0].user_id);
+    return res.json({ token });
   } catch (error) {
     console.error(error.message);
     res.status(500).send("server error");
