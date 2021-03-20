@@ -1,9 +1,8 @@
-require("dotenv/config");
-
 const express = require("express");
 const pool = require("./db");
 const path = require("path");
 const app = express();
+require("dotenv/config");
 const cors = require("cors");
 const multer = require("multer");
 const AWS = require("aws-sdk");
@@ -13,6 +12,11 @@ const PORT = process.env.PORT || 5000;
 //middleware
 app.use(cors());
 app.use(express.json());
+
+//routes
+app.use("/auth", require("./routes/jwtAuth"));
+app.use("/dashboard", require("./routes/dashboard"));
+
 
 //fileupload
 const s3 = new AWS.S3({
@@ -29,7 +33,8 @@ const upload = multer({
       cb(null, { fieldName: file.fieldname });
     },
     key: function (req, file, cb) {
-      cb(null, Date.now().toString()+".pdf");
+
+      cb(null, Date.now().toString() + ".pdf");
     },
   }),
 });
@@ -44,7 +49,21 @@ app.post("/personal", async (req, res) => {
     console.log(form);
     const newTodo = await pool.query(
       "INSERT INTO personal (firstname,lastname,preferredname,email,phonenumber,address,city,province,country,websiteone,websitetwo,websitethree,resumelink) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING *",
-      [form.firstName,form.lastName,form.prefName,form.email,form.phonenumber,form.address,form.city,form.province,"CANADA",form.web1,form.web2,form.web3,form.resumelink]
+      [
+        form.firstName,
+        form.lastName,
+        form.prefName,
+        form.email,
+        form.phonenumber,
+        form.address,
+        form.city,
+        form.province,
+        "Canada",
+        form.web1,
+        form.web2,
+        form.web3,
+        form.resumelink,
+      ]
     );
 
     res.json(newTodo.rows[0]);
@@ -53,14 +72,14 @@ app.post("/personal", async (req, res) => {
   }
 });
 
-
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
 }
 
 app.listen(PORT, () => {
   console.log(`server at port ${PORT}`);
 });
+
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/public/index.html"));

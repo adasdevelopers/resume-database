@@ -1,5 +1,41 @@
-import React, { Fragment, useState } from "react";
+
+import React, {
+  Fragment,
+  useState,
+  Component,
+  useCallback,
+  useMemo,
+} from "react";
 import { useForm } from "react-hook-form";
+import { useDropzone } from "react-dropzone";
+
+const baseStyle = {
+  flex: 1,
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  padding: "20px",
+  borderWidth: 2,
+  borderRadius: 2,
+  borderColor: "#eeeeee",
+  borderStyle: "dashed",
+  backgroundColor: "#fafafa",
+  color: "#bdbdbd",
+  outline: "none",
+  transition: "border .24s ease-in-out",
+};
+const activeStyle = {
+  borderColor: "#2196f3",
+};
+
+const acceptStyle = {
+  borderColor: "#00e676",
+};
+
+const rejectStyle = {
+  borderColor: "#ff1744",
+};
+
 
 export default function ApplicantForm() {
   const { register, handleSubmit } = useForm();
@@ -7,10 +43,6 @@ export default function ApplicantForm() {
   const [selectedFile, setSelectedFile] = useState();
   const [isFilePicked, setIsFilePicked] = useState(false);
 
-  const changeHandler = (event) => {
-    setSelectedFile(event.target.files[0]);
-    setIsFilePicked(true);
-  };
 
   const onSubmit = async (data, e) => {
     e.preventDefault();
@@ -38,6 +70,42 @@ export default function ApplicantForm() {
       console.error(err.message);
     }
   };
+
+  const onDrop = useCallback((acceptedFiles) => {
+    setSelectedFile(acceptedFiles[0]);
+    setIsFilePicked(true);
+  }, []);
+
+  const {
+    acceptedFiles,
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    isDragAccept,
+    isDragReject,
+  } = useDropzone({
+    onDrop,
+    accept: "application/pdf,.doc,.docx",
+  });
+
+  useDropzone({ onDrop });
+
+  const acceptedFileItems = acceptedFiles.map((file) => (
+    <li key={file.path}>
+      {file.path} - {file.size} bytes
+    </li>
+  ));
+
+  const style = useMemo(
+    () => ({
+      ...baseStyle,
+      ...(isDragActive ? activeStyle : {}),
+      ...(isDragAccept ? acceptStyle : {}),
+      ...(isDragReject ? rejectStyle : {}),
+    }),
+    [isDragActive, isDragReject, isDragAccept]
+  );
+
 
   return (
     <Fragment>
@@ -206,23 +274,23 @@ export default function ApplicantForm() {
         </div>
         <div className="form-group">
           <label htmlFor="file">Resume</label>
-          <input
-            className="form-control"
-            type="file"
-            id="file"
-            name="file"
-            onChange={changeHandler}
-          />
-          {isFilePicked ? (
-            <div>
-              <p>Size in bytes: {selectedFile.size}</p>
-            </div>
-          ) : (
-            <p>Select a resume to upload</p>
-          )}
-        </div>
 
-        <button type="submit" className="btn btn-primary">
+          <div
+            className="form-control"
+            {...getRootProps({ className: "dropzone" })}
+            style={style}
+          >
+            <input {...getInputProps()} type="file" id="file" name="file" />
+            <p>Drag 'n' drop some files here, or click to select files</p>
+            <em>(Only *.pdf,*.docx and *.doc files will be accepted)</em>
+          </div>
+          <aside>
+            <p>Accepted files:</p>
+            <ul>{acceptedFileItems}</ul>
+          </aside>
+        </div>
+        <button type="submit" className="btn bttnsub">
+
           Submit
         </button>
       </form>

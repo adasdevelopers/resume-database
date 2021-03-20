@@ -13,9 +13,11 @@ CREATE TABLE Admin (
 -- as encrypted salts and not as plaintext to protect the user 
 
 CREATE TABLE Sponsor (
-    ID SERIAL UNIQUE,
+    user_id UUID DEFAULT uuid_generate_v4(),
+    user_email VARCHAR(255) NOT NULL,
+    user_password VARCHAR(255) NOT NULL,
+    user_first_name VARCHAR(255) NOT NULL,
+    user_last_name VARCHAR(255) NOT NULL,
     CompanyName VARCHAR(255) NOT NULL,
-    City VARCHAR(255),
-    Email VARCHAR(255) NOT NULL,
-    Password VARCHAR(255) NOT NULL
+    City VARCHAR(255)
 );
