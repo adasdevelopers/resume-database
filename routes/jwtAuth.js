@@ -16,7 +16,7 @@ router.post("/register", validInfo, async (req, res) => {
     );
 
     if (user.rows.length !== 0) {
-      return res.status(401).send("user already exists");
+      return res.status(401).json("User already exists");
     }
 
     //bcrypt pwd
@@ -34,7 +34,7 @@ router.post("/register", validInfo, async (req, res) => {
     res.json({ token });
   } catch (error) {
     console.error(error.message);
-    res.status(500).send("server error");
+    res.status(500).json("server error");
   }
 });
 
@@ -49,7 +49,7 @@ router.post("/login", validInfo, async (req, res) => {
     );
 
     if (user.rows.length === 0) {
-      return res.status(401).json("Invalid Credential");
+      return res.status(401).json("Invalid Credentials");
     }
 
     const validPassword = await bcrypt.compare(
@@ -58,7 +58,7 @@ router.post("/login", validInfo, async (req, res) => {
     );
 
     if (!validPassword) {
-      return res.status(401).json("Invalid Credential");
+      return res.status(401).json("Invalid Credentials");
     }
     const token = jwtGen(user.rows[0].user_id);
     return res.json({ token });

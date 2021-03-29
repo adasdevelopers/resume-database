@@ -1,4 +1,3 @@
-
 import React, {
   Fragment,
   useState,
@@ -36,13 +35,11 @@ const rejectStyle = {
   borderColor: "#ff1744",
 };
 
-
 export default function ApplicantForm() {
   const { register, handleSubmit } = useForm();
 
   const [selectedFile, setSelectedFile] = useState();
   const [isFilePicked, setIsFilePicked] = useState(false);
-
 
   const onSubmit = async (data, e) => {
     e.preventDefault();
@@ -106,194 +103,194 @@ export default function ApplicantForm() {
     [isDragActive, isDragReject, isDragAccept]
   );
 
-
   return (
     <Fragment>
-      <h1 className="text-center mt-5">Applicant Form</h1>
-      <form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
-        <div className="form-row">
-          <div className="form-group col-md-6">
-            <label htmlFor="fname">First Name</label>
-            <input
-              type="text"
-              name="firstName"
-              className="form-control"
-              id="fname"
-              placeholder="First Name"
-              ref={register}
-              required
-            />
+      <section>
+        <h1 className="text-center mt-5">Applicant Form</h1>
+        <form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
+          <div className="form-row">
+            <div className="form-group col-md-6">
+              <label htmlFor="fname">First Name</label>
+              <input
+                type="text"
+                name="firstName"
+                className="form-control"
+                id="fname"
+                placeholder="First Name"
+                ref={register}
+                required
+              />
+            </div>
+            <div className="form-group col-md-6">
+              <label htmlFor="lname">Last Name</label>
+              <input
+                type="text"
+                name="lastName"
+                className="form-control"
+                id="lname"
+                placeholder="Last Name"
+                ref={register}
+                required
+              />
+            </div>
+            <div className="form-group col-md-6">
+              <label htmlFor="prefname">Preferred Name (Optional)</label>
+              <input
+                type="text"
+                name="prefName"
+                className="form-control"
+                id="prefname"
+                placeholder="Preferred Name"
+                ref={register}
+              />
+            </div>
           </div>
-          <div className="form-group col-md-6">
-            <label htmlFor="lname">Last Name</label>
-            <input
-              type="text"
-              name="lastName"
-              className="form-control"
-              id="lname"
-              placeholder="Last Name"
-              ref={register}
-              required
-            />
+          <div className="form-row">
+            <div className="form-group col-md-6">
+              <label htmlFor="inputEmail">Email</label>
+              <input
+                type="email"
+                name="email"
+                className="form-control"
+                id="inputEmail"
+                placeholder="Email"
+                ref={register}
+                required
+              />
+            </div>
+            <div className="form-group col-md-6">
+              <label htmlFor="inputphonenumber">Phone Number</label>
+              <input
+                type="tel"
+                name="phonenumber"
+                className="form-control"
+                id="inputphonenumber"
+                placeholder="(123)-456-7890"
+                ref={register}
+              />
+            </div>
           </div>
-          <div className="form-group col-md-6">
-            <label htmlFor="prefname">Preferred Name (Optional)</label>
-            <input
-              type="text"
-              name="prefName"
-              className="form-control"
-              id="prefname"
-              placeholder="Preferred Name"
-              ref={register}
-            />
-          </div>
-        </div>
-        <div className="form-row">
-          <div className="form-group col-md-6">
-            <label htmlFor="inputEmail">Email</label>
-            <input
-              type="email"
-              name="email"
-              className="form-control"
-              id="inputEmail"
-              placeholder="Email"
-              ref={register}
-              required
-            />
-          </div>
-          <div className="form-group col-md-6">
-            <label htmlFor="inputphonenumber">Phone Number</label>
-            <input
-              type="tel"
-              name="phonenumber"
-              className="form-control"
-              id="inputphonenumber"
-              placeholder="(123)-456-7890"
-              ref={register}
-            />
-          </div>
-        </div>
 
-        <div className="form-group">
-          <label htmlFor="inputAddress">Address</label>
-          <input
-            type="text"
-            name="address"
-            className="form-control"
-            id="inputAddress"
-            placeholder="1234 Main St"
-            ref={register}
-            required
-          />
-        </div>
-        <div className="form-row">
-          <div className="form-group col-md-6">
-            <label htmlFor="inputCity">City</label>
+          <div className="form-group">
+            <label htmlFor="inputAddress">Address</label>
             <input
               type="text"
-              name="city"
+              name="address"
               className="form-control"
-              id="inputCity"
+              id="inputAddress"
+              placeholder="1234 Main St"
               ref={register}
               required
             />
           </div>
-          <div className="form-group col-md-4">
-            <label htmlFor="inputState">Province</label>
-            <select
-              id="inputState"
-              name="province"
+          <div className="form-row">
+            <div className="form-group col-md-6">
+              <label htmlFor="inputCity">City</label>
+              <input
+                type="text"
+                name="city"
+                className="form-control"
+                id="inputCity"
+                ref={register}
+                required
+              />
+            </div>
+            <div className="form-group col-md-4">
+              <label htmlFor="inputState">Province</label>
+              <select
+                id="inputState"
+                name="province"
+                className="form-control"
+                placeholder=""
+                ref={register}
+                required
+              >
+                <option value="">Choose...</option>
+                <option value="AB">Alberta</option>
+                <option value="BC">British Columbia</option>
+                <option value="MB">Manitoba</option>
+                <option value="NB">New Brunswick</option>
+                <option value="NL">Newfoundland and Labrador</option>
+                <option value="NS">Nova Scotia</option>
+                <option value="ON">Ontario</option>
+                <option value="PE">Prince Edward Island</option>
+                <option value="QC">Quebec</option>
+                <option value="SK">Saskatchewan</option>
+                <option value="NT">Northwest Territories</option>
+                <option value="NU">Nunavut</option>
+                <option value="YT">Yukon</option>
+              </select>
+            </div>
+            <div className="form-group col-md-2">
+              <label htmlFor="inputZip">Zip</label>
+              <input
+                type="text"
+                name="zip"
+                className="form-control"
+                id="inputZip"
+                ref={register}
+                required
+              />
+            </div>
+          </div>
+          <p>Websites (Optional)</p>
+          <div className="form-row">
+            <div className="form-group col-md-4">
+              <label htmlFor="web1">LinkedIn</label>
+              <input
+                type="url"
+                name="web1"
+                className="form-control"
+                id="web1"
+                placeholder=""
+                ref={register}
+              />
+            </div>
+            <div className="form-group col-md-4">
+              <label htmlFor="web2">Github</label>
+              <input
+                type="url"
+                name="web2"
+                className="form-control"
+                id="web2"
+                placeholder=""
+                ref={register}
+              />
+            </div>
+            <div className="form-group col-md-4">
+              <label htmlFor="web3">Portfolio</label>
+              <input
+                type="url"
+                name="web3"
+                className="form-control"
+                id="web3"
+                placeholder=""
+                ref={register}
+              />
+            </div>
+          </div>
+          <div className="form-group">
+            <label htmlFor="file">Resume</label>
+
+            <div
               className="form-control"
-              placeholder=""
-              ref={register}
-              required
+              {...getRootProps({ className: "dropzone" })}
+              style={style}
             >
-              <option value="">Choose...</option>
-              <option value="AB">Alberta</option>
-              <option value="BC">British Columbia</option>
-              <option value="MB">Manitoba</option>
-              <option value="NB">New Brunswick</option>
-              <option value="NL">Newfoundland and Labrador</option>
-              <option value="NS">Nova Scotia</option>
-              <option value="ON">Ontario</option>
-              <option value="PE">Prince Edward Island</option>
-              <option value="QC">Quebec</option>
-              <option value="SK">Saskatchewan</option>
-              <option value="NT">Northwest Territories</option>
-              <option value="NU">Nunavut</option>
-              <option value="YT">Yukon</option>
-            </select>
+              <input {...getInputProps()} type="file" id="file" name="file" />
+              <p>Drag 'n' drop some files here, or click to select files</p>
+              <em>(Only *.pdf,*.docx and *.doc files will be accepted)</em>
+            </div>
+            <aside>
+              <p>Accepted files:</p>
+              <ul>{acceptedFileItems}</ul>
+            </aside>
           </div>
-          <div className="form-group col-md-2">
-            <label htmlFor="inputZip">Zip</label>
-            <input
-              type="text"
-              name="zip"
-              className="form-control"
-              id="inputZip"
-              ref={register}
-              required
-            />
-          </div>
-        </div>
-        <p>Websites (Optional)</p>
-        <div className="form-row">
-          <div className="form-group col-md-4">
-            <label htmlFor="web1">LinkedIn</label>
-            <input
-              type="url"
-              name="web1"
-              className="form-control"
-              id="web1"
-              placeholder=""
-              ref={register}
-            />
-          </div>
-          <div className="form-group col-md-4">
-            <label htmlFor="web2">Github</label>
-            <input
-              type="url"
-              name="web2"
-              className="form-control"
-              id="web2"
-              placeholder=""
-              ref={register}
-            />
-          </div>
-          <div className="form-group col-md-4">
-            <label htmlFor="web3">Portfolio</label>
-            <input
-              type="url"
-              name="web3"
-              className="form-control"
-              id="web3"
-              placeholder=""
-              ref={register}
-            />
-          </div>
-        </div>
-        <div className="form-group">
-          <label htmlFor="file">Resume</label>
-
-          <div
-            className="form-control"
-            {...getRootProps({ className: "dropzone" })}
-            style={style}
-          >
-            <input {...getInputProps()} type="file" id="file" name="file" />
-            <p>Drag 'n' drop some files here, or click to select files</p>
-            <em>(Only *.pdf,*.docx and *.doc files will be accepted)</em>
-          </div>
-          <aside>
-            <p>Accepted files:</p>
-            <ul>{acceptedFileItems}</ul>
-          </aside>
-        </div>
-        <button type="submit" className="btn bttnsub">
-
-          Submit
-        </button>
-      </form>
+          <button type="submit" className="btn bttnsub">
+            Submit
+          </button>
+        </form>
+      </section>
     </Fragment>
   );
 }
