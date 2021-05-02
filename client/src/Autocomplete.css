@@ -1,0 +1,48 @@
+.Autocomplete{
+    width: 50%;
+    border: 1px black;
+    box-shadow: 0 0 1px rgba(0,0,0,0.1), 0 2px 4px 1px rgba(0,0,0, .18);
+    color: rgba(0, 0, 0, 0.73);
+    position: absolute;
+    z-index: 5;
+    background-color: rgb(172, 196, 178);
+}
+    
+.required
+{
+    color: red;
+}
+.Autocomplete input{
+width: 100%;
+border: none;
+color: rgba(0, 0, 0, 0.73);
+padding: 10px 5px ;
+box-sizing: border-box;
+outline: none;
+}
+.Autocomplete ul::before{
+content: '';
+}
+
+.Autocomplete ul{
+list-style-type: none;
+text-align: left;
+margin: 0;
+padding: 0;
+border-top: 1px solid gray;
+}
+
+.Autocomplete li{
+padding: 10px 5px ;
+cursor: pointer;
+}
+
+.Autocomplete li:hover{
+background: lightgray;
+text-decoration: underline;
+}
+
+.App{
+margin: 150px auto 0 auto;
+width: 600px;
+}
