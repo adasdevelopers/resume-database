@@ -1,121 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <link rel="stylesheet" href="styles.css" />
-    <!--
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="theme-color" content="#000000" />
+		<meta
+			name="description"
+			content="Web site created using create-react-app"
+		/>
+		<link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+		<link rel="stylesheet" href="styles.css" />
+		<link href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" type="text/css" rel="stylesheet">
+		<link href="./bootstrap-tokenfield/dist/css/tokenfield-typeahead.css" type="text/css" rel="stylesheet">
+		<link href="./bootstrap-tokenfield/dist/css/bootstrap-tokenfield.css" type="text/css" rel="stylesheet">
+		<link href="./bootstrap-tokenfield/docs-assets/css/pygments-manni.css" type="text/css" rel="stylesheet">
+		<link href="./bootstrap-tokenfield/docs-assets/css/docs.css" type="text/css" rel="stylesheet">
+
+
+		<!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+		<link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
-    />
+		<link
+			rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+			integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+			crossorigin="anonymous"
+		/>
 
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+		<link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>Resume Database</title>
-  </head>
-  <body class="backbody">
-    <header id="header">
-      <div class="container d-flex align-items-center">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-          <a class="navbar-brand" href="https://www.adasteam.ca/"
-            >POWERED BY ADA'S TEAM</a
-          >
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="#">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#applicantform">Apply</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Login</a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </div>
-    </header>
+		<title>Resume Database</title>
+	</head>
+	<body class="backbody">
+		<noscript>You need to enable JavaScript to run this app.</noscript>
+		<div id="root"></div>
+		
+		
 
-    <section id="greet" class="d-flex align-items-center">
-      <div class="container">
-        <div class="row">
-          <div
-            class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1"
-            data-aos="fade-up"
-            data-aos-delay="200"
-          >
-            <h1>ResumeDB</h1>
-            <h2>Find quality candidates for your organization</h2>
-            <div class="d-lg-flex">
-              <a href="#applicantform" class="btn-get-started scrollto"
-                >Get Started ></a
-              >
-            </div>
-          </div>
-          <div
-            class="col-lg-6 order-1 order-lg-2 greet-img"
-            data-aos="zoom-in"
-            data-aos-delay="200"
-          >
-            <img src="page.png" class="img-fluid animated" alt="" />
-          </div>
-        </div>
-      </div>
-    </section>
+		<footer>
+			<script
+				src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+				integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+				crossorigin="anonymous"
+			></script>
+			<script
+				src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+				integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+				crossorigin="anonymous"
+			></script>
+			<script
+				src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+				integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+				crossorigin="anonymous"
+			></script>
+			<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" charset="UTF-8"></script>
+			<script type="text/javascript" src="//code.jquery.com/ui/1.10.3/jquery-ui.js" charset="UTF-8"></script>
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+			<script type="text/javascript" src="./bootstrap-tokenfield/dist/bootstrap-tokenfield.js" charset="UTF-8"></script>
+			<script type="text/javascript" src="./bootstrap-tokenfield/docs-assets/js/typeahead.bundle.js" charset="UTF-8"></script>
+			<script type="text/javascript" src="./bootstrap-tokenfield/docs-assets/js/docs.min.js" charset="UTF-8"></script>
+			<script type="text/javascript" src="./bootstrap-tokenfield/docs-assets/js/affix.js" charset="UTF-8"></script>
+			<script type="text/javascript" src="./bootstrap-tokenfield/docs-assets/js/scrollspy.js" charset="UTF-8"></script>
 
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"
-    ></script>
-
-  </body>
+		</footer>
+	</body>
 </html>

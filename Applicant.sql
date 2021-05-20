@@ -5,10 +5,9 @@ CREATE TABLE Personal (
     PreferredName VARCHAR(255),
     Email VARCHAR(50) NOT NULL,
     PhoneNumber VARCHAR(15),
-    Address VARCHAR(255) NOT NULL,
+    Address VARCHAR(255),
     City VARCHAR(255) NOT NULL,
     Province VARCHAR(255) NOT NULL,
-    Country VARCHAR(25) NOT NULL,
     WebsiteOne VARCHAR(255),
     WebsiteTwo VARCHAR(255),
     WebsiteThree VARCHAR(255),
@@ -24,6 +23,7 @@ CREATE TABLE Education (
     Degree VARCHAR(255),
     Major VARCHAR(255),
     Minor VARCHAR(255),
+    OTHER VARCHAR(255),
     FOREIGN KEY (PersonID) REFERENCES Personal(PersonID)
 );
 
