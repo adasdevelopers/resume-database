@@ -6,7 +6,7 @@ import { baseStyle, activeStyle, acceptStyle, rejectStyle } from "./styles.js";
 export default function ApplicantForm() {
 	const { register, control, handleSubmit } = useForm({
 		defaultValues: {
-			items: [
+			edu: [
 				{
 					InstName: "",
 					startSchool: "",
@@ -17,17 +17,37 @@ export default function ApplicantForm() {
 					minor: "",
 				},
 			],
+			exp: [{company:"",
+			position:"",
+			startDate:"",
+			endDate:"",
+			city:"",
+
+		}],
 		},
 	});
 
-	const { fields, append, remove } = useFieldArray({
+	const {
+		fields: edufields,
+		append: eduappend,
+		remove: eduremove,
+	} = useFieldArray({
 		control,
-		name: "items",
+		name: "edu",
+	});
+	const {
+		fields: expfields,
+		append: expappend,
+		remove: expremove,
+	} = useFieldArray({
+		control,
+		name: "exp",
 	});
 
 	const [selectedFile, setSelectedFile] = useState();
 	const [isFilePicked, setIsFilePicked] = useState(false);
-	const [count, setCount] = useState(0);
+	const [educount, edusetCount] = useState(0);
+	const [expcount, expsetCount] = useState(0);
 
 	const onSubmit = async (data, e) => {
 		e.preventDefault();
@@ -293,12 +313,12 @@ export default function ApplicantForm() {
 					<div>
 						<h3>Education</h3>
 						<ul className="list-unstyled">
-							{fields.map((item, index) => {
+							{edufields.map((item, index) => {
 								return (
 									<li key={item.id}>
 										<div>
 											<div className="form-row">
-												<div className="form-group col-md-5">
+												<div className="form-group col-md-6">
 													<label htmlFor="InstName">
 														Institution Name
 													</label>
@@ -346,35 +366,7 @@ export default function ApplicantForm() {
 														required
 													/>
 												</div>
-												<div className="form-group col-md-1">
-													<button
-														type="button"
-														id="removebutton"
-														className="btn btn-outline-danger form-control"
-														onClick={(e) => {
-															if (count > 0) {
-																remove(index);
-																setCount(
-																	count - 1
-																);
-															}
-														}}
-													>
-														<svg
-															xmlns="http://www.w3.org/2000/svg"
-															width="16"
-															height="15"
-															fill="currentColor"
-															className="bi bi-trash"
-															viewBox="0 0 16 16"
-														>
-															<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-															<path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-														</svg>
-													</button>
-												</div>
 											</div>
-
 											<div className="form-row">
 												<div className="form-group col-md-3">
 													<label htmlFor="degree">
@@ -430,7 +422,7 @@ export default function ApplicantForm() {
 														</option>
 													</select>
 												</div>
-												<div className="form-group col-md-2">
+												<div className="form-group col-md-3">
 													<label htmlFor="other">
 														If Other, Specify:
 													</label>
@@ -480,6 +472,33 @@ export default function ApplicantForm() {
 													/>
 												</div>
 											</div>
+											<div className="form-group">
+													<button
+														type="button"
+														id="removebutton"
+														className="btn btn-outline-danger form-control"
+														onClick={(e) => {
+															if (educount > 0) {
+																eduremove(index);
+																edusetCount(
+																	educount - 1
+																);
+															}
+														}}
+													>
+														<svg
+															xmlns="http://www.w3.org/2000/svg"
+															width="16"
+															height="15"
+															fill="currentColor"
+															className="bi bi-trash"
+															viewBox="0 0 16 16"
+														>
+															<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+															<path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+														</svg>
+													</button>
+												</div>
 										</div>
 									</li>
 								);
@@ -488,9 +507,9 @@ export default function ApplicantForm() {
 						<button
 							type="button"
 							onClick={(e) => {
-								if (count < 5) {
-									append({});
-									setCount(count + 1);
+								if (educount < 5) {
+									eduappend({});
+									edusetCount(educount + 1);
 								}
 							}}
 						>
@@ -499,123 +518,200 @@ export default function ApplicantForm() {
 					</div>
 					<div>
 						<h3>Experience</h3>
-						<div className="form-row">
-							<div className="form-group col-md-6">
-								<label htmlFor="inputCompany">
-									Company/Organization Name
-								</label>
-								<input
-									type="text"
-									name="companyName"
-									className="form-control"
-									id="inputCompany"
-									placeholder="ex: Google"
-									ref={register}
-									required
-								/>
-							</div>
-							<div className="form-group col-md-6">
-								<label htmlFor="inputPosition">
-									Position/Title
-								</label>
-								<input
-									type="text"
-									name="Position"
-									className="form-control"
-									id="inputPosition"
-									placeholder="ex: Software Developer"
-									ref={register}
-									required
-								/>
-							</div>
-							<div className="form-group col-md-6">
-								<label htmlFor="inputStartDate">
-									Start Date
-								</label>
-								<input
-									type="month"
-									name="startDate"
-									className="form-control"
-									id="inputStartDate"
-									placeholder="YYYY/MM"
-									ref={register}
-								/>
-							</div>
-						</div>
-						<div className="form-row">
-							<div className="form-group col-md-6">
-								<label htmlFor="inputEndDate">End Date</label>
-								<input
-									type="month"
-									name="endDate"
-									className="form-control"
-									id="inputEndDate"
-									placeholder="YYYY/MM"
-									ref={register}
-									required
-								/>
-							</div>
-							<div className="form-group col-md-6">
-								<label htmlFor="inputDescription">
-									Description
-								</label>
-								<input
-									style={{ height: "200px" }}
-									type="text"
-									name="description"
-									className="form-control"
-									id="inputDescription"
-									placeholder="Talk about your role and responsibilities."
-									ref={register}
-								/>
-							</div>
-						</div>
-						<div className="form-row">
-							<div className="form-group col-md-6">
-								<label htmlFor="inputCity">City</label>
-								<input
-									type="text"
-									name="city"
-									className="form-control"
-									id="inputCity"
-									ref={register}
-									required
-								/>
-							</div>
-							<div className="form-group col-md-4">
-								<label htmlFor="inputState">Province</label>
-								<select
-									id="inputState"
-									name="province"
-									className="form-control"
-									placeholder=""
-									ref={register}
-									required
-								>
-									<option value="">Choose...</option>
-									<option value="AB">Alberta</option>
-									<option value="BC">British Columbia</option>
-									<option value="MB">Manitoba</option>
-									<option value="NB">New Brunswick</option>
-									<option value="NL">
-										Newfoundland and Labrador
-									</option>
-									<option value="NS">Nova Scotia</option>
-									<option value="ON">Ontario</option>
-									<option value="PE">
-										Prince Edward Island
-									</option>
-									<option value="QC">Quebec</option>
-									<option value="SK">Saskatchewan</option>
-									<option value="NT">
-										Northwest Territories
-									</option>
-									<option value="NU">Nunavut</option>
-									<option value="YT">Yukon</option>
-								</select>
-							</div>
-						</div>
+						<ul className="list-unstyled">
+							{expfields.map((item, index) => {
+								return (
+									<li key={item.id}>
+										<div className="form-row">
+											<div className="form-group col-md-6">
+												<label htmlFor="Company">
+													Company/Organization Name
+												</label>
+												<input
+													type="text"
+													name="companyName"
+													className="form-control"
+													id="company"
+													placeholder="ex: Google"
+													ref={register()}
+							
+												/>
+											</div>
+											<div className="form-group col-md-6">
+												<label htmlFor="Position">
+													Position/Title
+												</label>
+												<input
+													type="text"
+													name="position"
+													className="form-control"
+													id="position"
+													placeholder="ex: Software Developer"
+													ref={register()}
+													
+												/>
+											</div>
+											<div className="form-group col-md-6">
+												<label htmlFor="StartDate">
+													Start Date
+												</label>
+												<input
+													type="month"
+													name="startDate"
+													className="form-control"
+													id="inputStartDate"
+													placeholder="YYYY/MM"
+													ref={register()}
+												/>
+											</div>
+											<div className="form-group col-md-6">
+												<label htmlFor="EndDate">
+													End Date
+												</label>
+												<input
+													type="month"
+													name="endDate"
+													className="form-control"
+													id="inputEndDate"
+													placeholder="YYYY/MM"
+													ref={register()}
+													
+												/>
+											</div>
+										</div>
+										<div className="form-row">
+											<div className="form-group col-md-6">
+												<label htmlFor="City">
+													City
+												</label>
+												<input
+													type="text"
+													name="city"
+													className="form-control"
+													id="city"
+													ref={register()}
+													
+												/>
+											</div>
+											<div className="form-group col-md-6">
+												<label htmlFor="province">
+													Province
+												</label>
+												<select
+													id="province"
+													name="province"
+													className="form-control"
+													placeholder=""
+													ref={register()}
+													
+												>
+													<option value="">
+														Choose...
+													</option>
+													<option value="AB">
+														Alberta
+													</option>
+													<option value="BC">
+														British Columbia
+													</option>
+													<option value="MB">
+														Manitoba
+													</option>
+													<option value="NB">
+														New Brunswick
+													</option>
+													<option value="NL">
+														Newfoundland and
+														Labrador
+													</option>
+													<option value="NS">
+														Nova Scotia
+													</option>
+													<option value="ON">
+														Ontario
+													</option>
+													<option value="PE">
+														Prince Edward Island
+													</option>
+													<option value="QC">
+														Quebec
+													</option>
+													<option value="SK">
+														Saskatchewan
+													</option>
+													<option value="NT">
+														Northwest Territories
+													</option>
+													<option value="NU">
+														Nunavut
+													</option>
+													<option value="YT">
+														Yukon
+													</option>
+												</select>
+											</div>
+										</div>
+										<div className="form-row">
+											<div className="form-group col-md-12">
+												<label htmlFor="Description">
+													Description
+												</label>
+												<textarea
+													maxLength="5000"
+													style={{ height: "150px" }}
+													type="textarea"
+													name="description"
+													className="form-control"
+													id="description"
+													placeholder="Talk about your role and responsibilities."
+													ref={register()}
+												/>
+											</div>
+										</div>
+										<div className="form-group">
+													<button
+														type="button"
+														id="removebutton"
+														className="btn btn-outline-danger form-control"
+														onClick={(e) => {
+															if (expcount > 0) {
+																expremove(index);
+																expsetCount(
+																	expcount - 1
+																);
+															}
+														}}
+													>
+														<svg
+															xmlns="http://www.w3.org/2000/svg"
+															width="16"
+															height="15"
+															fill="currentColor"
+															className="bi bi-trash"
+															viewBox="0 0 16 16"
+														>
+															<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+															<path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+														</svg>
+													</button>
+												</div>
+									</li>
+								);
+							})}
+						</ul>
+						<button
+							type="button"
+							onClick={(e) => {
+								if (expcount < 5) {
+									expappend({});
+									expsetCount(expcount + 1);
+								}
+							}}
+						>
+							Add Experience
+						</button>
 					</div>
+
 					<div>
 						<h3>Skills</h3>
 						<div className="form-row">
