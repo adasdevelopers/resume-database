@@ -132,8 +132,7 @@ const Home = () => (
 				</div>
 			</div>
 		</section>
-
-		<ApplicantForm />
+			<ApplicantForm />		
 	</Fragment>
 );
 

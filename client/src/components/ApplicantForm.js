@@ -17,13 +17,17 @@ export default function ApplicantForm() {
 					minor: "",
 				},
 			],
-			exp: [{company:"",
-			position:"",
-			startDate:"",
-			endDate:"",
-			city:"",
-
-		}],
+			exp: [
+				{
+					company: "",
+					position: "",
+					startDate: "",
+					endDate: "",
+					city: "",
+					province: "",
+					description: "",
+				},
+			],
 		},
 	});
 
@@ -54,15 +58,17 @@ export default function ApplicantForm() {
 		const formData = new FormData();
 		formData.append("pdf", selectedFile);
 
-		const res = await fetch("http://localhost:5000/upload", {
-			method: "POST",
-			body: formData,
-		})
-			.then((res) => res.json())
-			.catch((error) => {
-				console.error("Error:", error);
-			});
-		data.resumelink = res.location;
+		if (isFilePicked) {
+			const res = await fetch("http://localhost:5000/upload", {
+				method: "POST",
+				body: formData,
+			})
+				.then((res) => res.json())
+				.catch((error) => {
+					console.error("Error:", error);
+				});
+			data.resumelink = res.location;
+		}
 		console.log(data);
 		try {
 			await fetch("http://localhost:5000/submitform", {
@@ -473,32 +479,32 @@ export default function ApplicantForm() {
 												</div>
 											</div>
 											<div className="form-group">
-													<button
-														type="button"
-														id="removebutton"
-														className="btn btn-outline-danger form-control"
-														onClick={(e) => {
-															if (educount > 0) {
-																eduremove(index);
-																edusetCount(
-																	educount - 1
-																);
-															}
-														}}
+												<button
+													type="button"
+													id="removebutton"
+													className="btn btn-outline-danger form-control"
+													onClick={(e) => {
+														if (educount > 0) {
+															eduremove(index);
+															edusetCount(
+																educount - 1
+															);
+														}
+													}}
+												>
+													<svg
+														xmlns="http://www.w3.org/2000/svg"
+														width="16"
+														height="15"
+														fill="currentColor"
+														className="bi bi-trash"
+														viewBox="0 0 16 16"
 													>
-														<svg
-															xmlns="http://www.w3.org/2000/svg"
-															width="16"
-															height="15"
-															fill="currentColor"
-															className="bi bi-trash"
-															viewBox="0 0 16 16"
-														>
-															<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-															<path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-														</svg>
-													</button>
-												</div>
+														<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+														<path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+													</svg>
+												</button>
+											</div>
 										</div>
 									</li>
 								);
@@ -529,12 +535,14 @@ export default function ApplicantForm() {
 												</label>
 												<input
 													type="text"
-													name="companyName"
+													name={`exp[${index}].companyName`}
+													defaultValue={
+														item.companyName
+													}
 													className="form-control"
-													id="company"
+													id="companyName"
 													placeholder="ex: Google"
 													ref={register()}
-							
 												/>
 											</div>
 											<div className="form-group col-md-6">
@@ -543,12 +551,12 @@ export default function ApplicantForm() {
 												</label>
 												<input
 													type="text"
-													name="position"
+													name={`exp[${index}].position`}
+													defaultValue={item.position}
 													className="form-control"
 													id="position"
 													placeholder="ex: Software Developer"
 													ref={register()}
-													
 												/>
 											</div>
 											<div className="form-group col-md-6">
@@ -556,10 +564,13 @@ export default function ApplicantForm() {
 													Start Date
 												</label>
 												<input
-													type="month"
-													name="startDate"
+													type="date"
+													name={`exp[${index}].startDate`}
+													defaultValue={
+														item.startDate
+													}
 													className="form-control"
-													id="inputStartDate"
+													id="startDate"
 													placeholder="YYYY/MM"
 													ref={register()}
 												/>
@@ -569,13 +580,13 @@ export default function ApplicantForm() {
 													End Date
 												</label>
 												<input
-													type="month"
-													name="endDate"
+													type="date"
+													name={`exp[${index}].endDate`}
+													defaultValue={item.endDate}
 													className="form-control"
-													id="inputEndDate"
+													id="endDate"
 													placeholder="YYYY/MM"
 													ref={register()}
-													
 												/>
 											</div>
 										</div>
@@ -586,11 +597,11 @@ export default function ApplicantForm() {
 												</label>
 												<input
 													type="text"
-													name="city"
+													name={`exp[${index}].city`}
+													defaultValue={item.city}
 													className="form-control"
 													id="city"
 													ref={register()}
-													
 												/>
 											</div>
 											<div className="form-group col-md-6">
@@ -599,11 +610,11 @@ export default function ApplicantForm() {
 												</label>
 												<select
 													id="province"
-													name="province"
+													name={`exp[${index}].province`}
+													defaultValue={item.province}
 													className="form-control"
 													placeholder=""
 													ref={register()}
-													
 												>
 													<option value="">
 														Choose...
@@ -660,7 +671,10 @@ export default function ApplicantForm() {
 													maxLength="5000"
 													style={{ height: "150px" }}
 													type="textarea"
-													name="description"
+													name={`exp[${index}].description`}
+													defaultValue={
+														item.description
+													}
 													className="form-control"
 													id="description"
 													placeholder="Talk about your role and responsibilities."
@@ -669,32 +683,32 @@ export default function ApplicantForm() {
 											</div>
 										</div>
 										<div className="form-group">
-													<button
-														type="button"
-														id="removebutton"
-														className="btn btn-outline-danger form-control"
-														onClick={(e) => {
-															if (expcount > 0) {
-																expremove(index);
-																expsetCount(
-																	expcount - 1
-																);
-															}
-														}}
-													>
-														<svg
-															xmlns="http://www.w3.org/2000/svg"
-															width="16"
-															height="15"
-															fill="currentColor"
-															className="bi bi-trash"
-															viewBox="0 0 16 16"
-														>
-															<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-															<path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-														</svg>
-													</button>
-												</div>
+											<button
+												type="button"
+												id="removebutton"
+												className="btn btn-outline-danger form-control"
+												onClick={(e) => {
+													if (expcount > 0) {
+														expremove(index);
+														expsetCount(
+															expcount - 1
+														);
+													}
+												}}
+											>
+												<svg
+													xmlns="http://www.w3.org/2000/svg"
+													width="16"
+													height="15"
+													fill="currentColor"
+													className="bi bi-trash"
+													viewBox="0 0 16 16"
+												>
+													<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+													<path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+												</svg>
+											</button>
+										</div>
 									</li>
 								);
 							})}

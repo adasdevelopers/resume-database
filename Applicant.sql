@@ -36,7 +36,6 @@ CREATE TABLE Experience (
     Description VARCHAR(5000),
     City VARCHAR(255),
     Province VARCHAR(255),
-    Country VARCHAR(255),
     FOREIGN KEY (PersonID) REFERENCES Personal(PersonID)
 );
 

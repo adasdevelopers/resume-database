@@ -79,6 +79,21 @@ app.post("/submitform", async (req, res) => {
 				]
 			);
 		}
+		for (let i = 0; i < Object.keys(form.exp).length; i++) {
+			await pool.query(
+				"INSERT INTO experience (personid,companyname,position,startdate,enddate,description,city,province) VALUES($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *",
+				[
+					resp.personid,
+					form.exp[i].company,
+					form.exp[i].position,
+					form.exp[i].startDate,
+					form.exp[i].endDate,
+					form.exp[i].description,
+					form.exp[i].city,
+					form.exp[i].province
+				]
+			);
+		}
 		await pool.query(
 			"INSERT INTO skill (personid,skillname) VALUES($1,$2) RETURNING *",
 			[resp.personid, form.skills]
