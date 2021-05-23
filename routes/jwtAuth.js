@@ -69,7 +69,7 @@ router.post("/login", validInfo, async (req, res) => {
 });
 
 //verify token
-router.post("/verify", authorize, (req, res) => {
+router.get("/verify", authorize, (req, res) => {
   try {
     res.json(true);
   } catch (err) {
