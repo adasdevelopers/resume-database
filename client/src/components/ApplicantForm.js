@@ -53,6 +53,7 @@ export default function ApplicantForm() {
 	const [educount, edusetCount] = useState(0);
 	const [expcount, expsetCount] = useState(0);
 
+
 	const onSubmit = async (data, e) => {
 		e.preventDefault();
 		const formData = new FormData();
