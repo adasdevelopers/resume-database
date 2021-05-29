@@ -123,7 +123,7 @@ export default function ApplicantForm() {
 				<h1 className="text-center mt-5">Applicant Form</h1>
 				<form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
 					<div className="form-row">
-						<div className="form-group col-md-6">
+						<div className="form-group col-md-4">
 							<label htmlFor="fname">First Name*</label>
 							<input
 								type="text"
@@ -135,7 +135,7 @@ export default function ApplicantForm() {
 								required
 							/>
 						</div>
-						<div className="form-group col-md-6">
+						<div className="form-group col-md-4">
 							<label htmlFor="lname">Last Name*</label>
 							<input
 								type="text"
@@ -147,7 +147,7 @@ export default function ApplicantForm() {
 								required
 							/>
 						</div>
-						<div className="form-group col-md-6">
+						<div className="form-group col-md-4">
 							<label htmlFor="prefname">Preferred Name</label>
 							<input
 								type="text"
@@ -303,8 +303,8 @@ export default function ApplicantForm() {
 								name="file"
 							/>
 							<p>
-								Drag 'n' drop some files here, or click to
-								select files
+								Drag 'n' drop resume file here, or click to
+								select file
 							</p>
 							<em>
 								(Only *.pdf,*.docx and *.doc files will be
@@ -312,11 +312,11 @@ export default function ApplicantForm() {
 							</em>
 						</div>
 						<aside>
-							<p>Accepted files:</p>
+							<p>Uploaded file:</p>
 							<ul>{acceptedFileItems}</ul>
 						</aside>
 					</div>
-					<div>
+					<div className="mt-5">
 						<h3>Education</h3>
 						<ul className="list-unstyled">
 							{edufields.map((item, index) => {
@@ -479,50 +479,43 @@ export default function ApplicantForm() {
 												</div>
 											</div>
 											<div className="form-group">
-												<button
-													type="button"
-													id="removebutton"
-													className="btn btn-outline-danger form-control"
-													onClick={(e) => {
-														if (educount > 0) {
+												{educount > 0 && (
+													<button
+														type="button"
+														id="removebutton"
+														className="btn btn-outline-danger form-control"
+														onClick={(e) => {
 															eduremove(index);
 															edusetCount(
 																educount - 1
 															);
-														}
-													}}
-												>
-													<svg
-														xmlns="http://www.w3.org/2000/svg"
-														width="16"
-														height="15"
-														fill="currentColor"
-														className="bi bi-trash"
-														viewBox="0 0 16 16"
+														}}
 													>
-														<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-														<path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-													</svg>
-												</button>
+														<i class="bi bi-trash"></i>
+													</button>
+												)}
 											</div>
 										</div>
 									</li>
 								);
 							})}
 						</ul>
-						<button
-							type="button"
-							onClick={(e) => {
-								if (educount < 5) {
-									eduappend({});
-									edusetCount(educount + 1);
-								}
-							}}
-						>
-							Add Education
-						</button>
+						<div className="form-group">
+							{educount < 5 && (
+								<button
+									type="button"
+									className="btn btn-outline-success form-control"
+									onClick={(e) => {
+										eduappend({});
+										edusetCount(educount + 1);
+									}}
+								>
+									<i class="bi bi-plus-circle"></i>
+								</button>
+							)}
+						</div>
 					</div>
-					<div>
+					<div className="mt-5">
 						<h3>Experience</h3>
 						<ul className="list-unstyled">
 							{expfields.map((item, index) => {
@@ -683,56 +676,49 @@ export default function ApplicantForm() {
 											</div>
 										</div>
 										<div className="form-group">
-											<button
-												type="button"
-												id="removebutton"
-												className="btn btn-outline-danger form-control"
-												onClick={(e) => {
-													if (expcount > 0) {
+											{expcount > 0 && (
+												<button
+													type="button"
+													id="removebutton"
+													className="btn btn-outline-danger form-control"
+													onClick={(e) => {
 														expremove(index);
 														expsetCount(
 															expcount - 1
 														);
-													}
-												}}
-											>
-												<svg
-													xmlns="http://www.w3.org/2000/svg"
-													width="16"
-													height="15"
-													fill="currentColor"
-													className="bi bi-trash"
-													viewBox="0 0 16 16"
+													}}
 												>
-													<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-													<path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-												</svg>
-											</button>
+													<i class="bi bi-trash"></i>
+												</button>
+											)}
 										</div>
 									</li>
 								);
 							})}
 						</ul>
-						<button
-							type="button"
-							onClick={(e) => {
-								if (expcount < 5) {
-									expappend({});
-									expsetCount(expcount + 1);
-								}
-							}}
-						>
-							Add Experience
-						</button>
+						<div className="form-group">
+							{expcount < 5 && (
+								<button
+									type="button"
+									className="btn btn-outline-success form-control"
+									onClick={(e) => {
+										expappend({});
+										expsetCount(expcount + 1);
+									}}
+								>
+									<i class="bi bi-plus-circle"></i>
+								</button>
+							)}
+						</div>
 					</div>
 
-					<div>
+					<div className="mt-5">
 						<h3>Skills</h3>
-						<div className="form-row">
+						<div className="form-row mt-3">
 							<div className="token-input tokenfield col-md-12">
 								<input
 									type="text"
-									className="token-example-field form-control"
+									className="form-control token-example-field"
 									name="skills"
 									id="skills"
 									placeholder="Mention any noteworthy skills"
@@ -742,9 +728,9 @@ export default function ApplicantForm() {
 						</div>
 					</div>
 
-					<div>
-						<button type="submit" className="btn bttnsub btn-group">
-							Submit
+					<div className="form-group">
+						<button type="submit" className="btn bttnsub mt-5 col-md-12">
+							Submit &gt;
 						</button>
 					</div>
 				</form>

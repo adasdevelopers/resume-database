@@ -169,7 +169,12 @@ header {
   }
 }
 
-#applicantform .form-control:focus {
+#applicantform .form-control:focus  {
+  border-color: #c0ffa6;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #c0ffa6 ;
+}
+
+#applicantform .tokenfield.focus {
   border-color: #c0ffa6 !important;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #c0ffa6 !important;
 }
@@ -182,4 +187,8 @@ header {
 .bttnsub:hover {
   background-color: #c0ffa6;
   color: #212519;
+}
+
+#applicantform .token-input {
+  height:20px ;
 }
