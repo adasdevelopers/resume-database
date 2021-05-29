@@ -2,37 +2,61 @@ import React, { Fragment, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
 export default function Dashboard({ setAuth }) {
-  const [name, setName] = useState("");
+	const [user, setUser] = useState("");
 
-  const getProfile = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/dashboard/", {
-        method: "POST",
-        headers: { token: localStorage.token },
-      });
-	  const parsRes = await response.json();
-	  setName(parsRes.user_first_name)
+	const getProfile = async () => {
+		try {
+			const response = await fetch("http://localhost:5000/dashboard/", {
+				method: "POST",
+				headers: { token: localStorage.token },
+			});
+			const parsRes = await response.json();
+			setUser(parsRes);
+		} catch (error) {
+			console.log(error.message);
+		}
+	};
 
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
+	const logout = (e) => {
+		e.preventDefault();
+		localStorage.removeItem("token");
+		setAuth(false);
+		toast.success("Logged Out");
+	};
 
-  const logout = (e) =>{
-	  e.preventDefault();
-	  localStorage.removeItem("token");
-	  setAuth(false);
-	  toast.success("Logged Out")
-  }
+	useEffect(() => {
+		getProfile();
+	}, []);
 
-  useEffect(() => {
-    getProfile();
-  }, []);
-
-  return (
-    <Fragment>
-      <h1>Hello {name}</h1>
-	  <button className="btn btn-danger" onClick={e => logout(e)}>Logout</button>
-    </Fragment>
-  );
+	return (
+		<Fragment className='d-flex align-items-center'>
+			<div className="mt-5 d-flex align-items-center">
+				<h1>
+					Hello {user.user_first_name} {user.user_last_name}
+				</h1>
+			</div>
+			<div>
+				{
+					{
+						verified: <h3>Table</h3>,
+						admin: (
+							<div>
+								<h3>Admin Tools</h3>
+								<h3>Table</h3>
+							</div>
+						),
+						unverified: (
+							<h3>
+								Your account is still being reviewed, please
+								check back later or contact us.
+							</h3>
+						),
+					}[user.user_role]
+				}
+			</div>
+			<button className="btn btn-danger" onClick={(e) => logout(e)}>
+				Logout
+			</button>
+		</Fragment>
+	);
 }
