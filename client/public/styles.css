@@ -19,7 +19,7 @@ a:hover {
 }
 
 header {
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -189,6 +189,3 @@ header {
   color: #212519;
 }
 
-#applicantform .token-input {
-  height:20px ;
-}

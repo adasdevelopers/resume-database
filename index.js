@@ -104,6 +104,17 @@ app.post("/submitform", async (req, res) => {
 	}
 });
 
+app.get("/search", async(req,res)=>{
+	try {
+        const appEmail = req.body;
+        const applicant = await pool.query("SELECT * FROM personal WHERE email = $1",[appEmail.email]);
+        res.json(applicant.rows);
+    }catch (err){
+        console.error(err.message);
+    }
+});
+
+
 if (process.env.NODE_ENV === "production") {
 	app.use(express.static("client/build"));
 }

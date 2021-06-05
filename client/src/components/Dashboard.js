@@ -1,6 +1,8 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
+import AdminTools from "./AdminTools"
+
 export default function Dashboard({ setAuth }) {
 	const [user, setUser] = useState("");
 
@@ -41,7 +43,7 @@ export default function Dashboard({ setAuth }) {
 						verified: <h3>Table</h3>,
 						admin: (
 							<div>
-								<h3>Admin Tools</h3>
+								<AdminTools />
 								<h3>Table</h3>
 							</div>
 						),

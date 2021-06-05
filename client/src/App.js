@@ -48,7 +48,6 @@ function App() {
 		<Fragment>
 			<Router>
 				<div className="container">
-					<Nav />
 					<Switch>
 						<Route exact path="/" render={Home} />
 						<Route
@@ -93,6 +92,7 @@ function App() {
 const Home = () => (
 	<Fragment>
 		<section id="greet" className="d-flex align-items-center">
+			<Nav />
 			<div className="container">
 				<div className="row">
 					<div
@@ -132,7 +132,10 @@ const Home = () => (
 				</div>
 			</div>
 		</section>
-			<ApplicantForm />		
+		<div id="applicantform" >
+			<ApplicantForm  />
+		</div>
+		
 	</Fragment>
 );
 
@@ -168,13 +171,12 @@ const Nav = () => (
 							</a>
 						</li>
 						<li className="nav-item">
-							<HashLink
-								smooth
-								to="#applicantform"
-								className="nav-link"
+							<a
+								className="nav-link hiddenTab"
+								href="#applicantform"
 							>
 								Apply
-							</HashLink>
+							</a>
 						</li>
 						<li className="nav-item">
 							<a className="nav-link" href="/login">

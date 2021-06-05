@@ -119,7 +119,7 @@ export default function ApplicantForm() {
 
 	return (
 		<Fragment>
-			<section id="applicantform">
+			<section>
 				<h1 className="text-center mt-5">Applicant Form</h1>
 				<form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
 					<div className="form-row">
