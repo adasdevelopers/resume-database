@@ -11,7 +11,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 //components
 import ApplicantForm from "./components/ApplicantForm";
-//import Expform from "./components/ExperienceForm";
 import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -134,7 +133,6 @@ const Home = () => (
 		<div id="applicantform" >
 			<ApplicantForm  />
 		</div>
-		
 	</Fragment>
 );
 

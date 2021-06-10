@@ -54,7 +54,7 @@ export default function ApplicantForm() {
 	const [educount, edusetCount] = useState(0);
 	const [expcount, expsetCount] = useState(0);
 
-	const onSubmit = async (data, e) => {
+const onSubmit = async (data, e) => {
 		e.preventDefault();
 		try {
 			const check = await fetch(
@@ -90,6 +90,7 @@ export default function ApplicantForm() {
 			else{
 				toast.error("Application already submitted in the past!");
 			}
+
 		} catch (err) {
 			console.error(err.message);
 		}
@@ -132,6 +133,7 @@ export default function ApplicantForm() {
 
 	return (
 		<Fragment>
+
 			<section>
 				<h1 className="text-center mt-5">Applicant Form</h1>
 				<form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
@@ -740,7 +742,6 @@ export default function ApplicantForm() {
 							</div>
 						</div>
 					</div>
-
 					<div className="form-group">
 						<button
 							type="submit"
