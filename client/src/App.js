@@ -8,12 +8,9 @@ import {
 } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { HashLink } from "react-router-hash-link";
 
 //components
 import ApplicantForm from "./components/ApplicantForm";
-//import Expform from "./components/ExperienceForm";
-
 import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -49,7 +46,6 @@ function App() {
 		<Fragment>
 			<Router>
 				<div className="container">
-					<Nav />
 					<Switch>
 						<Route exact path="/" render={Home} />
 						<Route
@@ -94,6 +90,7 @@ function App() {
 const Home = () => (
 	<Fragment>
 		<section id="greet" className="d-flex align-items-center">
+			<Nav />
 			<div className="container">
 				<div className="row">
 					<div
@@ -133,7 +130,9 @@ const Home = () => (
 				</div>
 			</div>
 		</section>
-			<ApplicantForm />		
+		<div id="applicantform" >
+			<ApplicantForm  />
+		</div>
 	</Fragment>
 );
 
@@ -169,13 +168,12 @@ const Nav = () => (
 							</a>
 						</li>
 						<li className="nav-item">
-							<HashLink
-								smooth
-								to="#applicantform"
-								className="nav-link"
+							<a
+								className="nav-link hiddenTab"
+								href="#applicantform"
 							>
 								Apply
-							</HashLink>
+							</a>
 						</li>
 						<li className="nav-item">
 							<a className="nav-link" href="/login">

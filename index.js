@@ -28,6 +28,7 @@ const upload = multer({
 		s3: s3,
 		bucket: process.env.AWS_BUCKET_NAME,
 		acl: "public-read",
+		cacheControl: 'max-age=31536000',
 		metadata: function (req, file, cb) {
 			cb(null, { fieldName: file.fieldname });
 		},
@@ -101,6 +102,37 @@ app.post("/submitform", async (req, res) => {
 	} catch (err) {
 		console.error(err.message);
 	}
+});
+
+app.get("/search/:searchTerm", async(req,res)=>{
+	try {
+		// console.log(req)
+        const {searchTerm} = req.params;
+        const applicant = await pool.query("SELECT * FROM personal WHERE email = $1",[searchTerm]);
+		console.log(applicant.rows[0]);
+        res.json(applicant.rows[0]);
+
+    }catch (err){
+        console.error(err.message);
+    }
+});
+
+app.get("/check/:email", async(req,res)=>{
+	try {
+		// console.log(req)
+        const {email} = req.params;
+        const applicant = await pool.query("SELECT count(*) FROM personal WHERE email = $1",[email]);
+		const checkbool = applicant.rows[0].count;
+		let resp=false;
+		if (checkbool>0){
+			resp=true;;
+		}
+		console.log("Duplicate Applicant");
+        res.json(resp);
+
+    }catch (err){
+        console.error(err.message);
+    }
 });
 
 if (process.env.NODE_ENV === "production") {

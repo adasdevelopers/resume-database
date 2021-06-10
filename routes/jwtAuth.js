@@ -11,7 +11,7 @@ router.post("/register", validInfo, async (req, res) => {
   try {
     //check user already exists
     const user = await pool.query(
-      "SELECT * FROM sponsor WHERE user_email = $1",
+      "SELECT * FROM users WHERE user_email = $1",
       [email]
     );
 
@@ -27,8 +27,8 @@ router.post("/register", validInfo, async (req, res) => {
 
     //enter user into db
     const newuser = await pool.query(
-      "INSERT INTO sponsor (user_email, user_password, user_first_name, user_last_name, companyname, city) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *",
-      [email, bcryptpwd, firstName, lastName, company, city]
+      "INSERT INTO users (user_email, user_password, user_role, user_first_name, user_last_name, companyname, city) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *",
+      [email, bcryptpwd,'unverified', firstName, lastName, company, city]
     );
     const token = jwtGen(newuser.rows[0].user_id);
     res.json({ token });
@@ -44,7 +44,7 @@ router.post("/login", validInfo, async (req, res) => {
 
   try {
     const user = await pool.query(
-      "SELECT * FROM sponsor WHERE user_email = $1",
+      "SELECT * FROM users WHERE user_email = $1",
       [email]
     );
 
