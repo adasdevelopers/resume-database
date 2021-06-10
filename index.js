@@ -104,16 +104,36 @@ app.post("/submitform", async (req, res) => {
 	}
 });
 
-app.get("/search", async(req,res)=>{
+app.get("/search/:searchTerm", async(req,res)=>{
 	try {
-        const appEmail = req.body;
-        const applicant = await pool.query("SELECT * FROM personal WHERE email = $1",[appEmail.email]);
-        res.json(applicant.rows);
+		// console.log(req)
+        const {searchTerm} = req.params;
+        const applicant = await pool.query("SELECT * FROM personal WHERE email = $1",[searchTerm]);
+		console.log(applicant.rows[0]);
+        res.json(applicant.rows[0]);
+
     }catch (err){
         console.error(err.message);
     }
 });
 
+app.get("/check/:email", async(req,res)=>{
+	try {
+		// console.log(req)
+        const {email} = req.params;
+        const applicant = await pool.query("SELECT count(*) FROM personal WHERE email = $1",[email]);
+		const checkbool = applicant.rows[0].count;
+		let resp=false;
+		if (checkbool>0){
+			resp=true;;
+		}
+		console.log("Duplicate Applicant");
+        res.json(resp);
+
+    }catch (err){
+        console.error(err.message);
+    }
+});
 
 if (process.env.NODE_ENV === "production") {
 	app.use(express.static("client/build"));

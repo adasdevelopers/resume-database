@@ -2,6 +2,7 @@ import React, { Fragment, useState, useCallback, useMemo } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { useDropzone } from "react-dropzone";
 import { baseStyle, activeStyle, acceptStyle, rejectStyle } from "./styles.js";
+import { toast } from "react-toastify";
 
 export default function ApplicantForm() {
 	const { register, control, handleSubmit } = useForm({
@@ -55,28 +56,40 @@ export default function ApplicantForm() {
 
 	const onSubmit = async (data, e) => {
 		e.preventDefault();
-		const formData = new FormData();
-		formData.append("pdf", selectedFile);
-
-		if (isFilePicked) {
-			const res = await fetch("http://localhost:5000/upload", {
-				method: "POST",
-				body: formData,
-			})
-				.then((res) => res.json())
-				.catch((error) => {
-					console.error("Error:", error);
-				});
-			data.resumelink = res.location;
-		}
-		console.log(data);
 		try {
-			await fetch("http://localhost:5000/submitform", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(data),
-			});
-			window.location = "/";
+			const check = await fetch(
+				`http://localhost:5000/check/${data.email}`,
+				{
+					method: "GET",
+					headers: { "Content-Type": "application/json" },
+				}
+			).then((response) => response.json());
+
+			if (!check) {
+				const formData = new FormData();
+				formData.append("pdf", selectedFile);
+
+				if (isFilePicked) {
+					const res = await fetch("http://localhost:5000/upload", {
+						method: "POST",
+						body: formData,
+					})
+						.then((res) => res.json())
+						.catch((error) => {
+							console.error("Error:", error);
+						});
+					data.resumelink = res.location;
+				}
+				await fetch("http://localhost:5000/submitform", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify(data),
+				});
+				toast.success("Application Submitted");
+			}
+			else{
+				toast.error("Application already submitted in the past!");
+			}
 		} catch (err) {
 			console.error(err.message);
 		}
@@ -729,7 +742,10 @@ export default function ApplicantForm() {
 					</div>
 
 					<div className="form-group">
-						<button type="submit" className="btn bttnsub mt-5 col-md-12">
+						<button
+							type="submit"
+							className="btn bttnsub mt-5 col-md-12"
+						>
 							Submit &gt;
 						</button>
 					</div>

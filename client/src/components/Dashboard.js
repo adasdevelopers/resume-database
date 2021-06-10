@@ -31,7 +31,7 @@ export default function Dashboard({ setAuth }) {
 	}, []);
 
 	return (
-		<Fragment className='d-flex align-items-center'>
+		<Fragment >
 			<div className="mt-5 d-flex align-items-center">
 				<h1>
 					Hello {user.user_first_name} {user.user_last_name}

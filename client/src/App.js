@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { HashLink } from "react-router-hash-link";
 
 //components
 import ApplicantForm from "./components/ApplicantForm";

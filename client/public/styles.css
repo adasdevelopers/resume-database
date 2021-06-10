@@ -75,7 +75,7 @@ header {
   max-width: 1000%;
 }
 
-@media (max-width: 991px) {
+@media (max-width: 1200px) {
   #greet {
     height: 100vh;
     text-align: center;
@@ -84,11 +84,8 @@ header {
     -webkit-animation: none;
     animation: none;
   }
-  #greet .greet-img {
-    text-align: center;
-  }
   #greet .greet-img img {
-    width: 50%;
+    width: 120%;
   }
 }
 
@@ -120,6 +117,12 @@ header {
     padding: 10px 24px 11px 24px;
   }
 }
+
+/* @media (max-width: 1200px) {
+  #greet .greet-img img {
+    width: 100%;
+  }
+} */
 
 @-webkit-keyframes up-down {
   0% {
