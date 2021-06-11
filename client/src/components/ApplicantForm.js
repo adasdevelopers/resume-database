@@ -54,7 +54,7 @@ export default function ApplicantForm() {
 	const [educount, edusetCount] = useState(0);
 	const [expcount, expsetCount] = useState(0);
 
-const onSubmit = async (data, e) => {
+	const onSubmit = async (data, e) => {
 		e.preventDefault();
 		try {
 			const check = await fetch(
@@ -86,11 +86,9 @@ const onSubmit = async (data, e) => {
 					body: JSON.stringify(data),
 				});
 				toast.success("Application Submitted");
-			}
-			else{
+			} else {
 				toast.error("Application already submitted in the past!");
 			}
-
 		} catch (err) {
 			console.error(err.message);
 		}
@@ -133,9 +131,10 @@ const onSubmit = async (data, e) => {
 
 	return (
 		<Fragment>
-
 			<section>
-				<h1 className="text-center mt-5">Applicant Form</h1>
+				<h1 className="text-center mt-5" id="form">
+					Applicant Form
+				</h1>
 				<form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
 					<div className="form-row">
 						<div className="form-group col-md-4">
@@ -305,31 +304,43 @@ const onSubmit = async (data, e) => {
 					</div>
 					<div className="form-group">
 						<label htmlFor="file">Resume*</label>
-
-						<div
-							className="form-control"
-							{...getRootProps({ className: "dropzone" })}
-							style={style}
-						>
-							<input
-								{...getInputProps()}
-								type="file"
-								id="file"
-								name="file"
-							/>
-							<p>
-								Drag 'n' drop resume file here, or click to
-								select file
-							</p>
-							<em>
-								(Only *.pdf,*.docx and *.doc files will be
-								accepted)
-							</em>
-						</div>
-						<aside>
-							<p>Uploaded file:</p>
-							<ul>{acceptedFileItems}</ul>
-						</aside>
+						{!isFilePicked && (
+							<div
+								className="form-control"
+								{...getRootProps({ className: "dropzone" })}
+								style={style}
+							>
+								<input
+									{...getInputProps()}
+									type="file"
+									id="file"
+									name="file"
+								/>
+								<p>
+									Drag 'n' drop resume file here, or click to
+									select file
+								</p>
+								<em>
+									(Only *.pdf,*.docx and *.doc files will be
+									accepted)
+								</em>
+							</div>
+						)}
+						{isFilePicked && (
+							<div>
+								<label>
+									Uploaded file: {acceptedFileItems}
+								</label>
+								<button
+									className="btn btn-outline-danger ml-2"
+									onClick={(e) => {
+										setIsFilePicked(false)
+									}}
+								>
+									<i className="bi bi-trash"></i>
+								</button>
+							</div>
+						)}
 					</div>
 					<div className="mt-5">
 						<h3>Education</h3>
@@ -506,7 +517,7 @@ const onSubmit = async (data, e) => {
 															);
 														}}
 													>
-														<i class="bi bi-trash"></i>
+														<i className="bi bi-trash"></i>
 													</button>
 												)}
 											</div>
@@ -525,7 +536,7 @@ const onSubmit = async (data, e) => {
 										edusetCount(educount + 1);
 									}}
 								>
-									<i class="bi bi-plus-circle"></i>
+									<i className="bi bi-plus-circle"></i>
 								</button>
 							)}
 						</div>
@@ -703,7 +714,7 @@ const onSubmit = async (data, e) => {
 														);
 													}}
 												>
-													<i class="bi bi-trash"></i>
+													<i className="bi bi-trash"></i>
 												</button>
 											)}
 										</div>
@@ -721,7 +732,7 @@ const onSubmit = async (data, e) => {
 										expsetCount(expcount + 1);
 									}}
 								>
-									<i class="bi bi-plus-circle"></i>
+									<i className="bi bi-plus-circle"></i>
 								</button>
 							)}
 						</div>

@@ -28,7 +28,7 @@ const upload = multer({
 		s3: s3,
 		bucket: process.env.AWS_BUCKET_NAME,
 		acl: "public-read",
-		cacheControl: 'max-age=31536000',
+		cacheControl: "max-age=31536000",
 		metadata: function (req, file, cb) {
 			cb(null, { fieldName: file.fieldname });
 		},
@@ -47,7 +47,7 @@ app.post("/submitform", async (req, res) => {
 		const form = req.body;
 		console.log(form);
 		const pers = await pool.query(
-			"INSERT INTO personal (firstname,lastname,preferredname,email,phonenumber,address,city,province,websiteone,websitetwo,websitethree,resumelink) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING *",
+			"INSERT INTO personal (firstname,lastname,preferredname,email,phonenumber,address,city,province,websiteone,websitetwo,websitethree,resumelink,status) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING *",
 			[
 				form.firstName,
 				form.lastName,
@@ -60,7 +60,8 @@ app.post("/submitform", async (req, res) => {
 				form.web1,
 				form.web2,
 				form.web3,
-				form.resumelink
+				form.resumelink,
+				"active",
 			]
 		);
 		const resp = pers.rows[0];
@@ -76,7 +77,7 @@ app.post("/submitform", async (req, res) => {
 					form.edu[i].degree,
 					form.edu[i].major,
 					form.edu[i].minor,
-					form.edu[i].other
+					form.edu[i].other,
 				]
 			);
 		}
@@ -91,7 +92,7 @@ app.post("/submitform", async (req, res) => {
 					form.exp[i].endDate,
 					form.exp[i].description,
 					form.exp[i].city,
-					form.exp[i].province
+					form.exp[i].province,
 				]
 			);
 		}
@@ -104,35 +105,93 @@ app.post("/submitform", async (req, res) => {
 	}
 });
 
-app.get("/search/:searchTerm", async(req,res)=>{
+app.get("/admin/:searchTerm", async (req, res) => {
 	try {
 		// console.log(req)
-        const {searchTerm} = req.params;
-        const applicant = await pool.query("SELECT * FROM personal WHERE email = $1",[searchTerm]);
-		console.log(applicant.rows[0]);
-        res.json(applicant.rows[0]);
-
-    }catch (err){
-        console.error(err.message);
-    }
+		const { searchTerm } = req.params;
+		const applicant = await pool.query(
+			"SELECT * FROM personal WHERE email = $1",
+			[searchTerm]
+		);
+		console.log(applicant.rows);
+		res.json(applicant.rows);
+	} catch (err) {
+		console.error(err.message);
+	}
 });
 
-app.get("/check/:email", async(req,res)=>{
+app.delete("/admin/:id", async (req, res) => {
+	try {
+		const { id } = req.params;
+		await pool.query("DELETE FROM personal WHERE personid = $1", [id]);
+		res.json("Application deleted");
+	} catch (err) {
+		console.error(err.message);
+	}
+});
+
+app.put("/admin/:id", async (req, res) => {
+	try {
+		const { id } = req.params;
+		await pool.query(
+			"UPDATE personal SET status = CASE WHEN (status = 'active') THEN 'hidden' WHEN (status = 'hidden') THEN 'active' END WHERE personid = $1",
+			[id]
+		);
+		res.json("Application status changed");
+	} catch (err) {
+		console.error(err.message);
+	}
+});
+
+app.get("/check/:email", async (req, res) => {
 	try {
 		// console.log(req)
-        const {email} = req.params;
-        const applicant = await pool.query("SELECT count(*) FROM personal WHERE email = $1",[email]);
+		const { email } = req.params;
+		const applicant = await pool.query(
+			"SELECT count(*) FROM personal WHERE email = $1",
+			[email]
+		);
 		const checkbool = applicant.rows[0].count;
-		let resp=false;
-		if (checkbool>0){
-			resp=true;;
+		let resp = false;
+		if (checkbool > 0) {
+			resp = true;
 		}
-		console.log("Duplicate Applicant");
-        res.json(resp);
+		res.json(resp);
+	} catch (err) {
+		console.error(err.message);
+	}
+});
 
-    }catch (err){
-        console.error(err.message);
-    }
+app.get("/registerdecisions", async (req, res) => {
+	try {
+		const allRegs = await pool.query(
+			"SELECT * FROM users WHERE user_role = 'unverified'"
+		);
+		res.json(allRegs.rows);
+	} catch (err) {
+		console.error(err.message);
+	}
+});
+
+app.delete("/registerdecisions/:id", async (req, res) => {
+	try {
+		const { id } = req.params;
+		await pool.query("DELETE FROM users WHERE user_id = $1", [id]);
+		res.json("User deleted");
+	} catch (err) {
+		console.error(err.message);
+	}
+});
+
+app.put("/registerdecisions/:id", async (req, res) => {
+	try {
+		const { id } = req.params;
+		await pool.query(
+			"UPDATE users SET user_role = 'verified' WHERE user_id = $1",[id]);
+		res.json("User Account activated");
+	} catch (err) {
+		console.error(err.message);
+	}
 });
 
 if (process.env.NODE_ENV === "production") {
