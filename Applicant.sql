@@ -24,7 +24,7 @@ CREATE TABLE Education (
     Major VARCHAR(255),
     Minor VARCHAR(255),
     OTHER VARCHAR(255),
-    FOREIGN KEY (PersonID) REFERENCES Personal(PersonID)
+    FOREIGN KEY (PersonID) REFERENCES Personal(PersonID) ON DELETE CASCADE
 );
 
 CREATE TABLE Experience (
@@ -36,11 +36,11 @@ CREATE TABLE Experience (
     Description VARCHAR(5000),
     City VARCHAR(255),
     Province VARCHAR(255),
-    FOREIGN KEY (PersonID) REFERENCES Personal(PersonID)
+    FOREIGN KEY (PersonID) REFERENCES Personal(PersonID) ON DELETE CASCADE
 );
 
 CREATE TABLE Skill (
     PersonID UUID,
     SkillName VARCHAR(255),
-    FOREIGN KEY(PersonID) REFERENCES Personal(PersonID)
+    FOREIGN KEY(PersonID) REFERENCES Personal(PersonID) ON DELETE CASCADE
 );

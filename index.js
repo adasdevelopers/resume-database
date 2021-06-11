@@ -104,14 +104,24 @@ app.post("/submitform", async (req, res) => {
 	}
 });
 
-app.get("/search/:searchTerm", async(req,res)=>{
+app.get("/admin/:searchTerm", async(req,res)=>{
 	try {
 		// console.log(req)
         const {searchTerm} = req.params;
         const applicant = await pool.query("SELECT * FROM personal WHERE email = $1",[searchTerm]);
-		console.log(applicant.rows[0]);
-        res.json(applicant.rows[0]);
+		console.log(applicant.rows);
+        res.json(applicant.rows);
 
+    }catch (err){
+        console.error(err.message);
+    }
+});
+
+app.delete("/admin/:id", async(req,res)=> {
+    try {
+        const {id} = req.params;
+        const deleteApp = await pool.query("DELETE FROM personal WHERE personid = $1",[id]);
+        res.json("Application deleted");
     }catch (err){
         console.error(err.message);
     }
@@ -127,7 +137,6 @@ app.get("/check/:email", async(req,res)=>{
 		if (checkbool>0){
 			resp=true;;
 		}
-		console.log("Duplicate Applicant");
         res.json(resp);
 
     }catch (err){

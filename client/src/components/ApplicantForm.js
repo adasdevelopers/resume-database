@@ -504,7 +504,7 @@ export default function ApplicantForm() {
 															);
 														}}
 													>
-														<i class="bi bi-trash"></i>
+														<i className="bi bi-trash"></i>
 													</button>
 												)}
 											</div>
@@ -523,7 +523,7 @@ export default function ApplicantForm() {
 										edusetCount(educount + 1);
 									}}
 								>
-									<i class="bi bi-plus-circle"></i>
+									<i className="bi bi-plus-circle"></i>
 								</button>
 							)}
 						</div>
@@ -701,7 +701,7 @@ export default function ApplicantForm() {
 														);
 													}}
 												>
-													<i class="bi bi-trash"></i>
+													<i className="bi bi-trash"></i>
 												</button>
 											)}
 										</div>
@@ -719,7 +719,7 @@ export default function ApplicantForm() {
 										expsetCount(expcount + 1);
 									}}
 								>
-									<i class="bi bi-plus-circle"></i>
+									<i className="bi bi-plus-circle"></i>
 								</button>
 							)}
 						</div>
