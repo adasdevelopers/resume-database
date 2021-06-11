@@ -133,7 +133,6 @@ const Home = () => (
 		<section id="applicantform" >
 			<ApplicantForm  />
 		</section>
-		
 	</Fragment>
 );
 

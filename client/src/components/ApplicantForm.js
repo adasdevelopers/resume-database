@@ -753,7 +753,6 @@ export default function ApplicantForm() {
 							</div>
 						</div>
 					</div>
-
 					<div className="form-group">
 						<button
 							type="submit"

@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 export default function AdminTools() {
 	const [applicant, setApplicant] = useState([]);
 	const [searchTerm, setSearch] = useState([]);
-	const [Option, setOption] = useState("Hide Application");
+  const [Option, setOption] = useState("Hide Application");
 	const [regs, setRegs] = useState([]);
 
 	const onSearch = async (e) => {

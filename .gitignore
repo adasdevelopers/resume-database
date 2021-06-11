@@ -8,6 +8,7 @@
 /client/node_modules
 .eslintcache
 .cache
+
 # testing
 /coverage
 client/node_modules/.cache/.eslintcache
