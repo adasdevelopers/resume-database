@@ -86,8 +86,7 @@ export default function ApplicantForm() {
 					body: JSON.stringify(data),
 				});
 				toast.success("Application Submitted");
-			}
-			else{
+			} else {
 				toast.error("Application already submitted in the past!");
 			}
 		} catch (err) {
@@ -133,7 +132,9 @@ export default function ApplicantForm() {
 	return (
 		<Fragment>
 			<section>
-				<h1 className="text-center mt-5">Applicant Form</h1>
+				<h1 className="text-center mt-5" id="form">
+					Applicant Form
+				</h1>
 				<form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
 					<div className="form-row">
 						<div className="form-group col-md-4">
@@ -303,31 +304,43 @@ export default function ApplicantForm() {
 					</div>
 					<div className="form-group">
 						<label htmlFor="file">Resume*</label>
-
-						<div
-							className="form-control"
-							{...getRootProps({ className: "dropzone" })}
-							style={style}
-						>
-							<input
-								{...getInputProps()}
-								type="file"
-								id="file"
-								name="file"
-							/>
-							<p>
-								Drag 'n' drop resume file here, or click to
-								select file
-							</p>
-							<em>
-								(Only *.pdf,*.docx and *.doc files will be
-								accepted)
-							</em>
-						</div>
-						<aside>
-							<p>Uploaded file:</p>
-							<ul>{acceptedFileItems}</ul>
-						</aside>
+						{!isFilePicked && (
+							<div
+								className="form-control"
+								{...getRootProps({ className: "dropzone" })}
+								style={style}
+							>
+								<input
+									{...getInputProps()}
+									type="file"
+									id="file"
+									name="file"
+								/>
+								<p>
+									Drag 'n' drop resume file here, or click to
+									select file
+								</p>
+								<em>
+									(Only *.pdf,*.docx and *.doc files will be
+									accepted)
+								</em>
+							</div>
+						)}
+						{isFilePicked && (
+							<div>
+								<label>
+									Uploaded file: {acceptedFileItems}
+								</label>
+								<button
+									className="btn btn-outline-danger ml-2"
+									onClick={(e) => {
+										setIsFilePicked(false)
+									}}
+								>
+									<i className="bi bi-trash"></i>
+								</button>
+							</div>
+						)}
 					</div>
 					<div className="mt-5">
 						<h3>Education</h3>
