@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import AdminTable from "./AdminTable";
 
 import AdminTools from "./AdminTools"
 
@@ -45,6 +46,7 @@ export default function Dashboard({ setAuth }) {
 							<div>
 								<AdminTools />
 								<h3>Table</h3>
+								<AdminTable/>
 							</div>
 						),
 						unverified: (
@@ -59,6 +61,7 @@ export default function Dashboard({ setAuth }) {
 			<button className="btn btn-danger" onClick={(e) => logout(e)}>
 				Logout
 			</button>
+			
 		</Fragment>
 	);
 }
