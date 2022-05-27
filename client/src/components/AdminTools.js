@@ -3,8 +3,9 @@ import { toast } from "react-toastify";
 
 export default function AdminTools() {
 	const [applicant, setApplicant] = useState([]);
+	const [user, setUser] = useState("");
 	const [searchTerm, setSearch] = useState([]);
-  const [Option, setOption] = useState("Hide Application");
+  	const [Option, setOption] = useState("Hide Application");
 	const [regs, setRegs] = useState([]);
 
 	const onSearch = async (e) => {
@@ -64,6 +65,23 @@ export default function AdminTools() {
 		}
 	};
 
+	const getProfile = async () => {
+		try {
+			const response = await fetch("http://localhost:5000/dashboard/", {
+				method: "POST",
+				headers: { token: localStorage.token },
+			});
+			const parsRes = await response.json();
+			setUser(parsRes);
+		} catch (error) {
+			console.log(error.message);
+		}
+	};
+
+	 useEffect(() => {
+		 getProfile();
+	 }, []);
+
 	const getRegs = async () => {
 		try {
 			const response = await fetch(
@@ -76,6 +94,7 @@ export default function AdminTools() {
 			console.error(error.message);
 		}
 	};
+
 
 	useEffect(() => {
 		getRegs();
@@ -111,7 +130,7 @@ export default function AdminTools() {
 		<Fragment>
 			<div className="mb-5">
 				<h3 className="mt-3 mb-2">Search Application</h3>
-				<p>varunrajrana98@gmail.com</p>
+				<p>{user.user_email} </p>
 				<form className="d-flex mt-3 mb-3" onSubmit={onSearch}>
 					<input
 						type="email"
@@ -133,7 +152,7 @@ export default function AdminTools() {
 								{applicant.phonenumber} <br /> City:{" "}
 								{applicant.city} <br /> Province:{" "}
 								{applicant.province} <br /> <br /> Current
-								Status: {applicant.status}
+								Status: {applicant.applicantstatus}
 							</p>
 							<button
 								className="btn btn-warning mr-3"

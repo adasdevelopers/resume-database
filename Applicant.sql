@@ -11,8 +11,8 @@ CREATE TABLE Personal (
     WebsiteOne VARCHAR(255),
     WebsiteTwo VARCHAR(255),
     WebsiteThree VARCHAR(255),
-    resumelink VARCHAR(255) NOT NULL,
-    status VARCHAR(20) NOT NULL ,
+    ResumeLink VARCHAR(255) NOT NULL,
+    ApplicantStatus VARCHAR(20),
     PRIMARY KEY(PersonID)
 );
 

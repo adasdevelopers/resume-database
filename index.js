@@ -47,7 +47,7 @@ app.post("/submitform", async (req, res) => {
 		const form = req.body;
 		console.log(form);
 		const pers = await pool.query(
-			"INSERT INTO personal (firstname,lastname,preferredname,email,phonenumber,address,city,province,websiteone,websitetwo,websitethree,resumelink,status) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING *",
+			"INSERT INTO personal (firstname,lastname,preferredname,email,phonenumber,address,city,province,websiteone,websitetwo,websitethree,resumelink,applicantstatus) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING *",
 			[
 				form.firstName,
 				form.lastName,
@@ -172,6 +172,35 @@ app.get("/registerdecisions", async (req, res) => {
 		console.error(err.message);
 	}
 });
+
+app.get("/applicants", async (req, res) => {
+	try {
+		const applicants = await pool.query(
+			"SELECT * FROM personal LEFT JOIN Education ON Personal.personid = Education.personid LEFT JOIN Experience on Education.personid = Experience.personid LEFT JOIN Skill on Experience.personid = Skill.personid;"
+		);
+		// const applicants = await pool.query(
+		// 	"SELECT * FROM personal;"
+		// );
+		res.json(applicants.rows);
+	} catch (err) {
+		console.error(err.message);
+	}
+});
+
+app.get("/applicantdetails", async (req, res) => {
+	try {
+		const applicants = await pool.query(
+			"SELECT * FROM personal LEFT JOIN Education ON Personal.personid = Education.personid LEFT JOIN Experience on Education.personid = Experience.personid LEFT JOIN Skill on Experience.personid = Skill.personid;"
+		);
+		// const applicants = await pool.query(
+		// 	"SELECT * FROM personal;"
+		// );
+		res.json(applicants.rows);
+	} catch (err) {
+		console.error(err.message);
+	}
+});
+
 
 app.delete("/registerdecisions/:id", async (req, res) => {
 	try {
